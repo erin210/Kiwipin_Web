@@ -8,8 +8,8 @@ const environment = {
       apiBaseUrl: 'https://stage-api.p99pay.com',
     },
     github: {
-      pageBaseUrl: 'https://erin210.github.io/api_Kiwipin/',
-      apiBaseUrl: 'https://erin210.github.io/api_Kiwipin/',
+      pageBaseUrl: 'https://erin210.github.io/Kiwipin_Web/',
+      apiBaseUrl: 'https://erin210.github.io/Kiwipin_Web/',
     },
     localhost: {
       pageBaseUrl: 'http://127.0.0.1:5504/',
