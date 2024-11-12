@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>KIWI WALLET</title>
+    <script src="config.js"></script>
+    <script>
+        (function () {
+            var base = document.createElement('base');
+            base.href = window.pageBaseUrl;
+            document.head.appendChild(base);
+        })();
+    </script>
+    <script src="./assets/js/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="./assets/css/select2.min.css" />
+    <link rel="stylesheet" href="./assets/css/wallet.css?v=241008">
+    <script>
+        function initFunction(jsonObj) {
+            renderInfo(jsonObj);
+        }
+    </script>
+</head>
+
+<body class="walletBody">
+    <div id="apiWallet">
+        <div class="container">
+            <aside>
+                <div class="logo">
+                    <img src="./assets/img/logo3.svg" alt="" >
+                </div>
+                <div class="tabs tab_nnn">
+                    <div class="tab tab1 active">
+                        <a href="wallet_mem_info.html">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_summery">
+                                <img src="./assets/img/icon_tab_summery.svg" alt="">
+                            </span>
+                            <h3><span>總覽</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab2">
+                         <a href="history.html">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_history">
+                                <img src="./assets/img/icon_tab_history.svg" alt="">
+                            </span>
+                            <h3><span>歷史交易</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab3">
+                        <a href="wallet_mem_reset_pw.html">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_lock">
+                                <img src="./assets/img/icon_tab_lock.svg" alt="">
+                            </span>
+                            <h3><span>交易設定</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab4">
+                        <a href="member_set_new_pw.html">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_member">
+                                <img src="./assets/img/icon_tab_member.svg" alt="">
+                            </span>
+                            <h3><span>帳戶設定</span></h3>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+            
+            <div class="tab_container">
+                <div class="loginBar">
+                    <div id="langSelect" class="languageBox">
+                        <img src="./assets/img/icon_language.svg" alt="" srcset="">
+                        <span class="lang_text">語言</span>
+                        <ul id="langListItem" class="langListItem">
+                        </ul>
+                    </div>
+                    <div>
+                        <span class="imgbox">
+                            <img src="./assets/img/icon_member.svg" alt="">
+                        </span>
+                        <span id="userID">abc12345@gmail.com</span>
+                    </div>
+                </div>
+                
+                <div class="scroll_bg">
+                    <!-- tab1 op-->
+                    <div id="tab1" class="tab_content">
+                        <div class="form-payment"
+                            onsubmit="return check_submit1();">
+                            <div class="form_list reg">
+                                <h4>錢包總覽</h4>
+                            </div>
+                            <div class="summery_top">
+                                <div class="point_info">
+                                    <a id="confirm" href="wallet_mem_add.html" class="btn btn_blue confirm">
+                                        <span class="imgbox">
+                                            <img src="./assets/img/icon_add.svg" alt="">
+                                        </span>
+                                        <b>儲值</b>
+                                    </a>
+                                    <p class="point_label">
+                                        <span class="imgbox">
+                                            <img src="./assets/img/icon_light.svg" alt="">
+                                        </span>
+                                        錢包餘額
+                                    </p>
+                                    <p>
+                                    |
+                                    </p>
+                                    <p class="point_amount"><span id="U_KIWI_POINT"></span>點</p>
+                                </div>
+                            </div>
+                            <div class="form_list reg">
+                                <h4>???</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- tab1 ed-->
+                 </div>
+            </div>
+            <div class="email_info">service@kiwipin.com.tw</div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $('base').attr('href', apiUrl);
+        });
+
+        //從result回來，對照參數
+        var params = new URLSearchParams(window.location.search);
+        var activeTab = params.get('activeTab');
+        
+        
+        if(!activeTab==null){
+            switchTab(activeTab);
+        }
+
+        function renderInfo(json) {
+            var amountNUM=Number(json.U_KIWI_POINT);
+            $('#f_data').val(json.data);
+            $('#b_data').val(json.data);
+            $('.point_amount span').html(formatCurrency(amountNUM));
+            $('#buy_pin_amount').text(json.AMOUNT);
+
+            
+
+            Object.keys(json).forEach(function (k) {
+                var eleName = '#' + k;
+                // console.log(eleName + ' - ' + json[k]);
+                if ($(eleName).length <= 0) {
+                    appendElement_Input('#form', k, json[k]);
+                } else {
+                    $(eleName).val(json[k]);
+                }
+            });
+            //千元標註
+            function formatCurrency(number) {
+                // 確保 number 是一個整數
+                if (!Number.isInteger(number)) return null;
+
+                // 將整數轉成字串，並利用正規表達式添加逗號
+                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            $('#userID').text(json.U_EMAIL);
+
+        }
+        
+
+        //密碼眼睛
+        $('#togglePassword').on('click', function() {
+            const passwordField = $('#U_PINCODE');
+            const isPasswordVisible = passwordField.attr('type') === 'text';
+            passwordField.attr('type', isPasswordVisible ? 'password' : 'text');
+
+            const newIconSrc = isPasswordVisible ? pageBaseUrl+'/assets/img/icon_eye_close.svg' : pageBaseUrl+'/assets/img/icon_eye_open.svg';
+            $(this).attr('src', newIconSrc);
+        });
+
+        function switchTab(tab) {
+            $(".tab_content").hide(); 
+            $("#" + tab).fadeIn(); 
+            $("div.tabs div").removeClass("active");
+            $("." + tab).addClass("active"); 
+        }
+
+
+        function appendElement_Input(ele, name, value) {
+            var textHtml = '<input type="hidden" name="' + name + '"';
+            textHtml += ' value="' + value + '"';
+            textHtml += '/>';
+            $(ele).append(textHtml);
+        }
+
+
+    </script>
+
+    <script>
+        initFunction({"Tpye":"HOME","U_EMAIL":"yourweb210@gmail.com","U_PASSWORD":"erin1234","ReturnURL":"home","U_KIWI_POINT":"2500"});
+
+    </script>
+</body>
+
+</html>

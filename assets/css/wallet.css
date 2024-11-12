@@ -1,3 +1,5 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap");
 :root {
   --primary:#8FB0DC;
@@ -7,6 +9,47 @@
   --bg-image-mobile: url("");
 }
 
+/* 定義淡入動畫 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* 定義淡出動畫 */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+/* 定義淡出陰影 */
+@keyframes fadeShadow {
+  from {
+    box-shadow: 0 0 0 rgba(18, 18, 18, 0);
+  }
+  to {
+    box-shadow: 0 0 10px rgba(18, 18, 18, 0.25);
+  }
+}
+/* 定義淡出陰影 */
+@keyframes lightMove {
+  0%, 100% {
+    opacity: 0;
+    top: -100%;
+  }
+  30% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+    top: 100%;
+  }
+}
 body {
   font-family: "Noto Sans TC", "Inter", sans-serif;
   font-optical-sizing: auto;
@@ -66,11 +109,12 @@ input.input_error:focus-visible,
 select.input_error:focus-visible {
   appearance: none;
 }
-input.input_error:focus, input.input_error:focus-visible,
+input.input_error, input.input_error:focus, input.input_error:focus-visible,
+select.input_error,
 select.input_error:focus,
 select.input_error:focus-visible {
   outline: none;
-  border-color: var(--error);
+  border: 1px solid #DC8F8F !important;
 }
 input::placeholder,
 select::placeholder {
@@ -85,10 +129,16 @@ select::placeholder {
 
 input[readonly],
 input:disabled {
-  color: #D6D6D6 !important;
-  -webkit-text-fill-color: #D6D6D6 !important;
-  background-color: #EFEFEF;
+  color: #A5A5A5 !important;
+  -webkit-text-fill-color: #A5A5A5 !important;
+  background-color: #D6D6D6;
   border: 0;
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  input[readonly],
+  input:disabled {
+    opacity: 1;
+  }
 }
 
 small .icon {
@@ -113,6 +163,9 @@ small .icon {
   color: var(--error);
   display: flex;
   align-items: center;
+}
+.wrong_msg i {
+  padding-top: 0.2em;
 }
 @media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
   .wrong_msg {
@@ -229,6 +282,55 @@ input[type=radio]:checked::after {
   }
 }
 
+.imgbox {
+  display: inline-block;
+}
+.imgbox img {
+  width: 100%;
+  height: auto;
+}
+
+.languageBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 6em;
+  color: #A5A5A5;
+  cursor: pointer;
+}
+.languageBox img {
+  height: 1em;
+  margin-right: 0.5em;
+}
+.languageBox .langListItem {
+  position: absolute;
+  top: 25px;
+  left: 0;
+  margin-top: 0;
+  min-width: 8em;
+  height: 0;
+  padding: 15px 0;
+  overflow: hidden;
+  background-color: #A5A5A5;
+  color: #fff;
+  border-radius: 10px;
+  transform: scaleY(0); /* 初始隱藏 */
+  transform-origin: top; /* 從上方展開 */
+  opacity: 0; /* 初始透明 */
+  transition: transform 0.3s ease, opacity 0.5s ease;
+}
+.languageBox .langListItem li {
+  padding: 0.5em 15px;
+}
+.languageBox .langListItem li:hover {
+  background-color: var(--primary);
+}
+.languageBox:hover .langListItem {
+  height: auto;
+  transform: scaleY(1); /* 展開 */
+  opacity: 1; /* 顯示 */
+}
+
 #apiWallet {
   display: flex;
   justify-content: center;
@@ -272,6 +374,7 @@ input[type=radio]:checked::after {
     order: 2;
     max-width: 100%;
     padding-top: 20px;
+    padding-bottom: 20px;
   }
 }
 @media screen and (max-width: 767px) {
@@ -303,7 +406,7 @@ input[type=radio]:checked::after {
 }
 #apiWallet .container aside {
   position: relative;
-  width: 26%;
+  width: 22%;
 }
 @media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
   #apiWallet .container aside {
@@ -315,7 +418,7 @@ input[type=radio]:checked::after {
   z-index: 9;
   display: block;
   width: 100%;
-  padding: 10px;
+  padding: 10px 39px;
   padding-top: 50px;
   text-align: center;
   box-sizing: border-box;
@@ -331,7 +434,7 @@ input[type=radio]:checked::after {
 }
 @media (max-width: 991.98px) {
   #apiWallet .container aside .logo {
-    padding: 15px 30px;
+    padding: 0 30px;
   }
 }
 @media screen and (max-width: 767px) {
@@ -361,8 +464,8 @@ input[type=radio]:checked::after {
   flex-direction: column;
   align-items: end;
   width: 100%;
-  margin-top: 50px;
-  font-size: 22px;
+  margin-top: 1em;
+  font-size: 20px;
   font-weight: 400;
   color: #A5A5A5;
   box-sizing: border-box;
@@ -374,6 +477,9 @@ input[type=radio]:checked::after {
     margin-top: 0;
     padding: 0 15vw;
   }
+  #apiWallet .container aside .tabs.tab_nnn {
+    justify-content: center;
+  }
 }
 @media screen and (max-device-width: 932px) and (orientation: landscape) {
   #apiWallet .container aside .tabs {
@@ -382,29 +488,22 @@ input[type=radio]:checked::after {
 }
 #apiWallet .container aside .tabs div.tab {
   position: relative;
-  display: flex;
-  align-items: center;
   width: 100%;
-  padding: 1.5em;
+  padding: 1.3em 1.2em;
+  padding-left: 2em;
   margin-right: -1px;
   text-align: center;
   border-radius: 50px 0 0 50px;
   cursor: pointer;
   box-sizing: border-box;
 }
-@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
-  #apiWallet .container aside .tabs div.tab {
-    width: auto;
-    padding: 1.5em;
-    padding-bottom: 2.5em;
-    margin: 0 1em;
-    margin-bottom: -2px;
-    font-size: 14px;
-    border-radius: 50px 50px 0 0;
-    border-bottom: 2px solid #F8F8F6;
-  }
+#apiWallet .container aside .tabs div.tab a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 #apiWallet .container aside .tabs div.tab h3 {
+  z-index: 9;
   font-weight: 400;
   color: #fff;
 }
@@ -417,30 +516,71 @@ input[type=radio]:checked::after {
   }
 }
 #apiWallet .container aside .tabs div.tab .imgbox {
-  margin-right: 1.5em;
+  width: 1.2em;
+  margin-right: 1em;
 }
 #apiWallet .container aside .tabs div.tab .imgbox img {
   width: 100%;
   filter: invert(100%);
+}
+@media (max-width: 991.98px) {
+  #apiWallet .container aside .tabs div.tab .imgbox {
+    width: 1em;
+    margin-right: 1em;
+  }
 }
 @media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
   #apiWallet .container aside .tabs div.tab .imgbox {
     width: 18px !important;
     margin-right: 0;
     font-size: 1px;
-    background: url(../img/icon_add_m.svg) no-repeat center center;
     background-size: cover;
+    filter: invert(100%);
   }
   #apiWallet .container aside .tabs div.tab .imgbox img {
     opacity: 0;
+  }
+  #apiWallet .container aside .tabs div.tab .imgbox.tab_add {
+    background: url(../img/icon_tab_add_m.svg) no-repeat center center;
+  }
+  #apiWallet .container aside .tabs div.tab .imgbox.tab_summery {
+    background: url(../img/icon_tab_summery_m.svg) no-repeat center center;
+  }
+  #apiWallet .container aside .tabs div.tab .imgbox.tab_history {
+    background: url(../img/icon_tab_history_m.svg) no-repeat center center;
+  }
+  #apiWallet .container aside .tabs div.tab .imgbox.tab_lock {
+    background: url(../img/icon_tab_lock_m.svg) no-repeat center center;
+  }
+  #apiWallet .container aside .tabs div.tab .imgbox.tab_member {
+    background: url(../img/icon_tab_member_m.svg) no-repeat center center;
   }
 }
 #apiWallet .container aside .tabs div.tab i {
   display: none;
 }
+@media (max-width: 991.98px) {
+  #apiWallet .container aside .tabs div.tab {
+    padding: 1em;
+  }
+  #apiWallet .container aside .tabs div.tab h3 {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container aside .tabs div.tab {
+    width: auto;
+    padding: 1.1em;
+    margin: 1.2em 0.65em;
+    font-size: 14px;
+    border-radius: 50px;
+    background-color: rgba(114, 113, 113, 0.2);
+  }
+}
 #apiWallet .container aside .tabs div.tab.active {
   position: relative;
   background-color: #F8F8F6;
+  margin: 0.5em -1px;
 }
 #apiWallet .container aside .tabs div.tab.active h3 {
   color: #121212;
@@ -457,6 +597,7 @@ input[type=radio]:checked::after {
   #apiWallet .container aside .tabs div.tab.active .imgbox {
     width: 14px;
     margin-right: 0;
+    filter: inherit;
   }
 }
 #apiWallet .container aside .tabs div.tab.active i {
@@ -533,17 +674,54 @@ input[type=radio]:checked::after {
     left: 0;
   }
 }
+#apiWallet .container aside .tabs div.tab.active .bg_im {
+  display: block;
+  position: absolute;
+  top: -280%;
+  left: -78%;
+  width: 420px;
+  height: 480px;
+}
+#apiWallet .container aside .tabs div.tab.active .bg_im img {
+  width: 100%;
+  height: auto;
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container aside .tabs div.tab.active {
+    width: auto;
+    padding: 1.2em;
+    padding-bottom: 2.5em;
+    margin: 0 1em;
+    margin-bottom: -2px;
+    font-size: 14px;
+    border-radius: 50px 50px 0 0;
+    border-bottom: 2px solid #F8F8F6;
+  }
+}
 #apiWallet .container .tab_container {
   flex-grow: 1;
   width: 74%;
   height: 95vh;
-  padding: 3.5% 5%;
+  padding: 3.5%;
   background-color: #F8F8F6;
   box-sizing: border-box;
   -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
   -ms-border-radius: 50px;
   border-radius: 50px;
+}
+#apiWallet .container .tab_container .scroll_bg {
+  width: 100%;
+  height: 86%;
+  padding: 0 1%;
+  overflow-y: auto;
+}
+@media (max-width: 1399.98px) {
+  #apiWallet .container .tab_container .tab_content {
+    height: auto;
+    opacity: 0; /* 初始透明度為 0 */
+    animation: fadeIn 0.3s ease-in forwards; /* 1 秒內淡入 */
+  }
 }
 @media (max-width: 1199.98px) {
   #apiWallet .container .tab_container {
@@ -572,6 +750,10 @@ input[type=radio]:checked::after {
     -ms-border-radius: 10px;
     border-radius: 10px;
   }
+  #apiWallet .container .tab_container .scroll_bg {
+    height: auto;
+    overflow-y: inherit;
+  }
 }
 @media screen and (max-width: 767px) {
   #apiWallet .container .tab_container .tab_content {
@@ -589,16 +771,39 @@ input[type=radio]:checked::after {
   position: relative;
   right: 0;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 1em;
   padding-bottom: 1em;
   border-bottom: 1px solid #D6D6D6;
   letter-spacing: 0;
 }
+#apiWallet .container .tab_container .loginBar > div {
+  display: flex;
+  align-items: center;
+}
+#apiWallet .container .tab_container .loginBar a {
+  text-decoration: none;
+  color: #A5A5A5;
+  font-size: 18px;
+  display: block;
+  border: #f00;
+}
+#apiWallet .container .tab_container .loginBar span#userID {
+  margin-top: -0.3em;
+}
 #apiWallet .container .tab_container .loginBar .imgbox {
   width: 2em;
-  margin-right: 0.5em;
+  margin-right: 0.3em;
+  vertical-align: middle;
+}
+#apiWallet .container .tab_container .loginBar .imgbox.arrow {
+  width: 1em;
+  filter: brightness(9.5);
+}
+#apiWallet .container .tab_container .loginBar .imgbox.arrow img {
+  width: 100%;
+  height: auto;
 }
 #apiWallet .container .tab_container .loginBar .imgbox img {
   max-width: 100%;
@@ -606,9 +811,10 @@ input[type=radio]:checked::after {
 }
 @media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
   #apiWallet .container .tab_container .loginBar {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
+    z-index: 99;
     width: 100%;
     color: #F8F8F6;
     background-color: #252424;
@@ -618,23 +824,622 @@ input[type=radio]:checked::after {
     font-size: 12px;
     box-sizing: border-box;
   }
+  #apiWallet .container .tab_container .loginBar a {
+    font-size: 12px;
+  }
+  #apiWallet .container .tab_container .loginBar .imgbox.arrow {
+    width: 12px;
+  }
+}
+#apiWallet .container .tab_container .form-payment {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container .tab_container .form-payment {
+    justify-content: flex-start;
+    min-height: inherit;
+    width: 100%;
+    height: 100%;
+  }
+}
+#apiWallet .container .tab_container .form-payment .summery_top {
+  position: relative;
+  background: url(../img/point_info_bg.svg) no-repeat top left;
+  background-size: 100% auto;
+  box-shadow: 0 0 10px rgba(18, 18, 18, 0.25);
+  border-radius: 10px;
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container .tab_container .form-payment .summery_top {
+    font-size: 12px;
+  }
+}
+#apiWallet .container .tab_container .form-payment .summery_top .point_info {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 30px 0;
+  margin-top: 210px;
+  background-color: #fff;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 22px;
+}
+#apiWallet .container .tab_container .form-payment .summery_top .point_info .confirm {
+  position: absolute;
+  top: -2.5em;
+  right: 10%;
+  z-index: 2;
+  width: 80px;
+  height: 80px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 10px solid #fff;
+  box-sizing: content-box;
+  border-radius: 50%;
+}
+#apiWallet .container .tab_container .form-payment .summery_top .point_info .confirm b {
+  display: none;
+  opacity: 0;
+  font-size: 18px;
+}
+#apiWallet .container .tab_container .form-payment .summery_top .point_info .confirm:hover .imgbox {
+  display: none;
+}
+#apiWallet .container .tab_container .form-payment .summery_top .point_info .confirm:hover b {
+  display: block;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+#apiWallet .container .tab_container .form-payment .summery_top .point_info .point_label {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+#apiWallet .container .tab_container .form-payment .summery_top .point_info .point_label .imgbox {
+  margin-right: 0.5em;
+}
+#apiWallet .container .tab_container .form-payment .summery_top .point_info .point_amount {
+  font-size: 20px;
+  color: #727171;
+  margin-left: 1rem;
+}
+#apiWallet .container .tab_container .form-payment .summery_top .point_info .point_amount span {
+  font-size: 40px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--primary);
+  margin-right: 8px;
+  letter-spacing: -0.02em;
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .point_amount {
+    font-size: 12px;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .point_amount span {
+    font-size: 36px;
+  }
+}
+@media (max-width: 575.98px) {
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .point_amount {
+    padding-left: 0;
+  }
+}
+#apiWallet .container .tab_container .form-payment .summery_top .point_info .product_name {
+  font-size: 22px;
+  font-weight: bold;
+  color: #727171;
+  margin-top: 0.8em;
+}
+@media (max-width: 1199.98px) {
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info {
+    margin-top: 18vw;
+    padding: 25px 0;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .confirm {
+    right: 7%;
+    width: 55px;
+    height: 55px;
+    font-size: 14px;
+    border-width: 5px;
+    padding: 0;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .confirm .imgbox {
+    width: 18px;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .confirm .imgbox img {
+    width: 100%;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .confirm b {
+    font-size: 12px;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .point_label p {
+    font-size: 16px;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .point_label .imgbox {
+    width: 16px;
+    margin-right: 0.3em;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .point_label .imgbox img {
+    width: 100%;
+    height: 100%;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .point_amount span {
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info {
+    margin-top: 23vw;
+    padding: 15px 0;
+    font-size: 14px;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .confirm {
+    right: 5%;
+    width: 35px;
+    height: 35px;
+    font-size: 11px;
+    border-width: 5px;
+    padding: 0;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .confirm .imgbox {
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .confirm .imgbox img {
+    width: 100%;
+    height: 100%;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .confirm:hover .imgbox {
+    display: block;
+    opacity: 1;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .confirm:hover b {
+    display: none;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .point_label {
+    font-size: 12px;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .point_label p {
+    font-size: 12px;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .point_label .imgbox {
+    width: 14px;
+    margin-right: 0.3em;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .point_label .imgbox img {
+    width: 100%;
+    height: 100%;
+  }
+  #apiWallet .container .tab_container .form-payment .summery_top .point_info .point_amount span {
+    font-size: 18px;
+  }
+}
+#apiWallet .container .tab_container .form-payment .form_list {
+  margin-top: 3%;
+  color: #727171;
+}
+#apiWallet .container .tab_container .form-payment .form_list span {
+  font-weight: 400;
+}
+#apiWallet .container .tab_container .form-payment .form_list h4 {
+  font-size: 22px;
+  color: #121212;
+  margin-bottom: 4%;
+}
+#apiWallet .container .tab_container .form-payment .form_list .check_code {
+  margin-bottom: 2em;
+}
+#apiWallet .container .tab_container .form-payment .form_list .check_code input {
+  font-size: 16px;
+}
+#apiWallet .container .tab_container .form-payment .form_list .check_code .line {
+  width: 100%;
+  height: 1px;
+  margin: 7% 0;
+  display: block;
+  border-bottom: 1px solid #D6D6D6;
+}
+#apiWallet .container .tab_container .form-payment .form_list .check_code b {
+  width: 100%;
+  display: block;
+  color: var(--primary);
+  margin-top: 1em;
+  font-size: 16px;
+  text-align: right;
+}
+#apiWallet .container .tab_container .form-payment .form_list .check_code b a {
+  text-decoration: underline;
+  color: var(--primary);
+}
+#apiWallet .container .tab_container .form-payment .form_list .check_code b a.text_grey {
+  color: #A5A5A5;
+}
+@media (max-width: 1199.98px) {
+  #apiWallet .container .tab_container .form-payment .form_list {
+    margin-top: 2%;
+  }
+  #apiWallet .container .tab_container .form-payment .form_list h4 {
+    margin-bottom: 3%;
+  }
+}
+@media (max-width: 991.98px) {
+  #apiWallet .container .tab_container .form-payment .form_list {
+    margin-top: 3%;
+  }
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container .tab_container .form-payment .form_list {
+    margin-top: 10px;
+  }
+  #apiWallet .container .tab_container .form-payment .form_list h4 {
+    font-size: 14px;
+    color: #121212;
+    margin-bottom: 20px;
+  }
+  #apiWallet .container .tab_container .form-payment .form_list span {
+    font-size: 14px;
+  }
+  #apiWallet .container .tab_container .form-payment .form_list .check_code {
+    min-height: inherit;
+    margin-bottom: 1em;
+  }
+  #apiWallet .container .tab_container .form-payment .form_list .check_code input {
+    font-size: 12px;
+  }
+  #apiWallet .container .tab_container .form-payment .form_list .check_code b {
+    font-size: 11px;
+  }
+}
+#apiWallet .container .tab_container .form-payment span {
+  font-size: 18px;
+}
+#apiWallet .container .tab_container .form-payment span.wrong_msg {
+  font-size: 14px;
+  font-weight: normal;
+}
+@media screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container .tab_container .form-payment span {
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+    font-size: 14px;
+  }
+}
+#apiWallet .container .tab_container .form-payment .code_PW {
+  position: relative;
+}
+#apiWallet .container .tab_container .form-payment .code_PW input {
+  padding-right: 30px;
+}
+#apiWallet .container .tab_container .form-payment .code_PW img {
+  position: absolute;
+  right: 10px;
+  top: 60%;
+  width: 30px;
+  height: 30px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  display: block;
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container .tab_container .form-payment .code_PW img {
+    width: 20px;
+    height: 20px;
+  }
+}
+#apiWallet .container .tab_container .form-payment .form_bt {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: right;
+  font-size: 18px;
+}
+#apiWallet .container .tab_container .form-payment .form_bt.btn_center {
+  flex-direction: column;
+}
+@media screen and (max-width: 767px) {
+  #apiWallet .container .tab_container .form-payment .form_bt {
+    height: 50%;
+    justify-self: end;
+    align-items: flex-end;
+  }
+}
+#apiWallet .container .tab_container .form-payment .form_bt p {
+  color: #A5A5A5;
+}
+#apiWallet .container .tab_container .form-payment .form_bt p .tab_bt {
+  color: var(--primary);
+  cursor: pointer;
+}
+#apiWallet .container .tab_container .form-payment .form_bt .btn_blue {
+  width: 170px;
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container .tab_container .form-payment .form_bt {
+    flex-direction: row;
+    font-size: 14px;
+  }
+  #apiWallet .container .tab_container .form-payment .form_bt p {
+    order: 2;
+    margin-top: 1.3em;
+  }
+  #apiWallet .container .tab_container .form-payment .form_bt .btn_blue {
+    width: 25vw;
+    order: 1;
+  }
+}
+@media screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container .tab_container .form-payment .form_bt {
+    margin-top: 3vw;
+  }
+  #apiWallet .container .tab_container .form-payment .form_bt p {
+    font-size: 14px;
+  }
+  #apiWallet .container .tab_container .form-payment .form_bt .btn_blue {
+    width: 15em;
+    font-size: 14px;
+  }
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table th, #apiWallet .container .tab_container .form-payment .history_list .list_PC table td {
+  padding: 0.55em 0.3em;
+  text-align: center;
+  line-height: 1.5;
+  color: #121212;
+  vertical-align: middle;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table th:first-child {
+  border-radius: 10px 0 0 10px;
+  padding-left: 0.8em;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table td.list_th {
+  padding-left: 0.8em;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table th:last-child {
+  border-radius: 0 10px 10px 0;
+  padding-right: 0.8em;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table td:last-child {
+  padding-right: 0.8em;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table th {
+  background-color: #EFEFEF;
+  font-size: 16px;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table td {
+  font-size: 14px;
+  color: #727171;
+  border-bottom: 1px solid #D6D6D6;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table td.acc_name {
+  width: 18%;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table td.acc_product {
+  width: 18%;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table td span {
+  font-size: 14px;
+  color: #A5A5A5;
+  display: block;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table td i.icon {
+  vertical-align: middle;
+  margin-right: 0.5em;
+  line-height: 1.1;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table td i.icon.account_add ~ b {
+  color: var(--primary);
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table td i.icon.account_deduct ~ b {
+  color: var(--error);
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table td b {
+  width: 2.5em;
+  display: inline-block;
+  text-align: left;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table tr:last-child td {
+  border-bottom: 0;
+}
+@media (max-width: 991.98px) {
+  #apiWallet .container .tab_container .form-payment .history_list .list_PC {
+    display: none;
+  }
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M h5 {
+  font-size: 14px;
+  color: #A5A5A5;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M ul li {
+  background-color: #EFEFEF;
+  border-radius: 10px;
+  margin: 1em 0;
+  padding: 1em;
+  color: #727171;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M ul li > div > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M ul li > div > div .list_text_right {
+  text-align: right;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M ul li > div > div > span {
+  display: block;
+  width: 100%;
+  line-height: 1.85;
+  font-size: 14px;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M ul li > div > div i.imgbox {
+  width: 1em;
+  height: 1em;
+  cursor: pointer;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+  display: inline-block;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M ul li > div > div i.imgbox img {
+  width: 100%;
+  height: auto;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M .list_head {
+  padding-bottom: 1em;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M .list_head span.acc_date {
+  font-size: 12px;
+  color: #A5A5A5;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M .list_head span.acc_point i.icon {
+  vertical-align: middle;
+  margin-right: 0.5em;
+  line-height: 1.1;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M .list_head span.acc_point i.icon.account_add ~ b {
+  color: var(--primary);
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M .list_head span.acc_point i.icon.account_deduct ~ b {
+  color: var(--error);
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M .list_head span.acc_point b {
+  width: 2.5em;
+  display: inline-block;
+  text-align: left;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M .list_content {
+  padding-top: 1em;
+  border-top: 1px solid #D6D6D6;
+  display: none;
+  opacity: 0;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M .list_content.show {
+  display: block;
+  animation: fadeSlideIn 0.3s forwards;
+}
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    max-height: 0;
+  }
+  100% {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+@media (min-width: 991.98px) {
+  #apiWallet .container .tab_container .form-payment .history_list .list_M {
+    display: none;
+  }
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container .tab_container .form-payment .history_list .list_M h5 {
+    font-size: 12px;
+    color: #A5A5A5;
+  }
+}
+#apiWallet .container .tab_container .form-payment .card_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 102%;
+  margin-left: -2%;
+  margin-right: -2%;
+}
+#apiWallet .container .tab_container .form-payment .card_wrapper .item {
+  width: 25%;
+  margin-bottom: 2%;
+  padding: 2%;
+  box-sizing: border-box;
+}
+#apiWallet .container .tab_container .form-payment .card_wrapper .item a {
+  position: relative;
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+  text-decoration: none;
+  overflow: hidden;
+}
+#apiWallet .container .tab_container .form-payment .card_wrapper .item a::after {
+  position: absolute;
+  left: -30%;
+  content: "";
+  width: 200%;
+  height: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: rotate(-30deg);
+  box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.5);
+}
+#apiWallet .container .tab_container .form-payment .card_wrapper .item a:hover {
+  animation: fadeShadow 0.3s ease-out forwards;
+}
+#apiWallet .container .tab_container .form-payment .card_wrapper .item a:hover::after {
+  animation: lightMove 0.9s ease-out forwards;
+}
+#apiWallet .container .tab_container .form-payment .card_wrapper .item .card img {
+  width: 100%;
+  height: auto;
+}
+#apiWallet .container .tab_container .form-payment .card_wrapper .item .price {
+  width: 100%;
+  color: #727171;
+  font-size: 18px;
+  margin-top: 0.5em;
+  letter-spacing: 0;
+}
+#apiWallet .container .tab_container .form-payment .card_wrapper .item .price span {
+  color: #8FB0DC;
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 0.25em;
+  margin-left: 0.05em;
+}
+#apiWallet .container .tab_container .form-payment .card_wrapper .item .price span i {
+  letter-spacing: -0.03em;
+}
+@media (max-width: 1199.98px) {
+  #apiWallet .container .tab_container .form-payment .card_wrapper .item .price {
+    font-size: 16px;
+  }
+  #apiWallet .container .tab_container .form-payment .card_wrapper .item .price span {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container .tab_container .form-payment .card_wrapper .item {
+    width: 33.3333%;
+    margin-bottom: 3%;
+  }
+  #apiWallet .container .tab_container .form-payment .card_wrapper .item .price {
+    font-size: 10px;
+  }
+  #apiWallet .container .tab_container .form-payment .card_wrapper .item .price span {
+    font-size: 14px;
+  }
 }
 #apiWallet .container .email_info {
-  width: 24%;
+  width: 22%;
   position: absolute;
   left: 0;
   bottom: 50px;
   color: #fff;
-  text-align: right;
+  text-align: center;
   font-size: 1.2rem;
   font-weight: 200;
   box-sizing: border-box;
 }
 @media (max-width: 1199.98px) {
   #apiWallet .container .email_info {
-    left: 40px;
-    width: 24%;
-    padding-right: 2em;
+    width: 22%;
+    padding-right: 0;
     font-size: 0.8rem;
   }
 }
@@ -707,6 +1512,7 @@ input[type=radio]:checked::after {
   align-items: center;
   padding: 1em 10%;
   color: #727171;
+  letter-spacing: 0;
 }
 #apiWallet .container .result_info .item h1 {
   width: 100%;
@@ -725,14 +1531,29 @@ input[type=radio]:checked::after {
 #apiWallet .container .result_info .item h1.content .code_copy img {
   height: 1.4em;
 }
+#apiWallet .container .result_info .item h1.content span {
+  margin-right: 0.2em;
+}
+#apiWallet .container .result_info .item h1.content .amount_ss {
+  font-size: 24px !important;
+  color: var(--primary);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+#apiWallet .container .result_info .item h1.content .amount_ff {
+  font-size: 24px !important;
+  color: var(--error);
+  font-weight: 600;
+}
+#apiWallet .container .result_info .item h1.content .timetxt {
+  color: #A5A5A5;
+}
 @media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
   #apiWallet .container .result_info .item h1 {
     font-size: 14px;
   }
-}
-@media screen and (max-device-width: 932px) and (orientation: landscape) {
-  #apiWallet .container .result_info .item h1 {
-    font-size: 14px;
+  #apiWallet .container .result_info .item h1.content {
+    text-align: right;
   }
 }
 #apiWallet .container .result_info .item:first-child {
@@ -744,17 +1565,17 @@ input[type=radio]:checked::after {
   -ms-border-radius: 10px;
   border-radius: 10px;
 }
-#apiWallet .container .result_info .item:first-child h1.content {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  color: var(--primary);
-  font-size: 15px;
-  font-weight: 600;
-}
-#apiWallet .container .result_info.error_info .item:first-child h1.content {
-  color: var(--error) !important;
-  font-weight: 400;
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  #apiWallet .container .result_info .item:first-child {
+    font-size: 14px;
+  }
+  #apiWallet .container .result_info .item:first-child h1.content {
+    text-align: right;
+    font-size: 12px;
+  }
+  #apiWallet .container .result_info .item:first-child h1.content .amount_ss, #apiWallet .container .result_info .item:first-child h1.content .amount_ff {
+    font-size: 16px !important;
+  }
 }
 #apiWallet .error {
   color: #f75454;
@@ -762,205 +1583,425 @@ input[type=radio]:checked::after {
   margin-top: 0.5rem;
   display: none;
 }
-#apiWallet .form-payment {
+
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+}
+.pagination .page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+}
+.pagination a, .pagination span {
+  display: block;
+  text-decoration: none;
+  font-size: 1rem;
+  width: 2rem;
+  height: 2rem;
+  text-align: center;
+  margin: 0 0.3em;
+  padding: 0.35em 0;
+  border-radius: 50px;
+  box-sizing: border-box;
+  color: #A5A5A5;
+  border: 1px solid transparent;
+}
+.pagination a:hover:not(.active), .pagination span:hover:not(.active) {
+  border: 1px solid #D6D6D6;
+  cursor: pointer;
+}
+.pagination a.active, .pagination span.active {
+  background-color: #121212;
+  color: #fff;
+  cursor: default;
+}
+.pagination .prev, .pagination .next {
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  padding-top: 5px;
+}
+.pagination .prev:disabled, .pagination .next:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(-180deg);
+  }
+}
+.rotate img {
+  animation: rotate 0.3s forwards;
+}
+
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(18, 18, 18, 0.6);
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.popup .popup_wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
-@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
-  #apiWallet .form-payment {
-    justify-content: flex-start;
-    min-height: inherit;
-    height: 100%;
-  }
-}
-#apiWallet .form-payment .point_info {
-  width: 100%;
-  margin-top: 14px;
-  padding: 35px;
-  background-color: #EFEFEF;
+  justify-content: center;
+  align-items: center;
+  background-color: #F8F8F6;
+  border-radius: 1rem;
+  width: 600px;
+  max-width: 90%;
+  height: 350px;
+  padding: 45px 0;
   box-sizing: border-box;
-  text-align: center;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  border-radius: 10px;
 }
-@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
-  #apiWallet .form-payment .point_info {
-    padding: 25px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    border-radius: 5px;
-  }
+.popup .popup_wrapper img.icon {
+  width: 85px;
 }
-#apiWallet .form-payment .point_info .point_amount {
+.popup .popup_wrapper .content {
+  height: 83%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.popup .popup_wrapper .content .title {
   font-size: 22px;
-  color: #727171;
-}
-#apiWallet .form-payment .point_info .point_amount span {
-  font-size: 70px;
-  font-weight: bold;
-  font-family: Arial, Helvetica, sans-serif;
-  color: var(--primary);
-  margin-right: 8px;
-  letter-spacing: -0.02em;
-}
-@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
-  #apiWallet .form-payment .point_info .point_amount {
-    font-size: 14px;
-  }
-  #apiWallet .form-payment .point_info .point_amount span {
-    font-size: 38px;
-  }
-}
-#apiWallet .form-payment .point_info .product_name {
-  font-size: 22px;
-  font-weight: bold;
-  color: #727171;
-  margin-top: 0.8em;
-}
-@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
-  #apiWallet .form-payment .point_info .product_name {
-    font-size: 14px;
-  }
-}
-#apiWallet .form-payment .form_list {
-  margin-top: 5%;
-  color: #727171;
-}
-#apiWallet .form-payment .form_list span {
-  font-weight: 400;
-}
-#apiWallet .form-payment .form_list h4 {
-  font-size: 22px;
+  margin: 1rem 0;
   color: #121212;
-  margin-bottom: 5%;
 }
-#apiWallet .form-payment .form_list .check_code {
-  min-height: 150px;
+.popup .popup_wrapper .content .notice {
+  font-size: 18px;
+  padding: 0 1rem;
+  color: #727171;
 }
-#apiWallet .form-payment .form_list .check_code input {
-  font-size: 16px;
+.popup .popup_wrapper .confirm {
+  cursor: pointer;
+  width: 170px;
+  margin-top: auto;
+  color: #fff;
+  background-color: #8FB0DC;
+  font-size: 18px;
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  .popup .popup_wrapper img.icon {
+    width: 67px;
+  }
+  .popup .popup_wrapper .content .title {
+    font-size: 16px;
+  }
+  .popup .popup_wrapper .content .notice {
+    font-size: 14px;
+    margin: 1.2rem 0;
+  }
+  .popup .popup_wrapper .confirm {
+    font-size: 14px;
+  }
+}
+
+.custom-checkbox label::before {
+  border: 1px solid #A5A5A5;
+  background-color: transparent;
+}
+
+body {
+  font-family: "Noto Sans TC", "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 100%;
+  letter-spacing: 0.05em;
+}
+body.walletLogin {
+  background-color: #121212;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+body.walletLogin::before {
+  position: fixed;
+  top: 0;
+  right: 0;
+  content: "";
+  width: 50%;
+  height: 100vh;
+  display: block;
+  background-color: #F8F8F6;
+}
+@media (max-width: 767.98px) {
+  body.walletLogin::before {
+    top: inherit;
+    bottom: 0;
+    width: 100%;
+    height: 50%;
+  }
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  body.walletLogin::before {
+    top: inherit;
+    bottom: 0;
+    width: 100%;
+    height: 39%;
+  }
+}
+body.walletLogin::after {
+  content: "";
+  position: fixed;
+  left: -8%;
+  bottom: -10vh;
+  width: 20vw;
+  height: 25vw;
+  background: url("../img/bg_im.svg") no-repeat 10% bottom;
+  background-size: cover;
+  transform: scaleX(-1); /* 左右翻轉 */
+  z-index: -1; /* 背景層 */
+}
+body.walletLogin #apiWallet .container {
+  padding: 0;
+}
+body.walletLogin #apiWallet .container .tab_container {
+  height: auto;
+  border-radius: 0;
+  padding: 2% 3.5% 2% 10%;
 }
 @media (max-width: 1199.98px) {
-  #apiWallet .form-payment .form_list {
-    margin-top: 2%;
-  }
-  #apiWallet .form-payment .form_list h4 {
-    margin-bottom: 3%;
+  body.walletLogin #apiWallet .container .tab_container {
+    padding: 2.5% 4% 2.5% 6%;
   }
 }
-@media (max-width: 991.98px) {
-  #apiWallet .form-payment .form_list {
-    margin-top: 3%;
-  }
-  #apiWallet .form-payment .form_list h4 {
-    margin-bottom: 3%;
-  }
+body.walletLogin #apiWallet .container .tab_container .logo {
+  text-align: center;
+  margin-bottom: 5%;
+}
+body.walletLogin #apiWallet .container .tab_container .logo img {
+  width: 25%;
 }
 @media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
-  #apiWallet .form-payment .form_list {
-    margin-top: 10px;
+  body.walletLogin #apiWallet .container .tab_container {
+    height: fit-content;
+    padding: 2.5% 6%;
+    border-radius: 70px 0 0 0;
   }
-  #apiWallet .form-payment .form_list h4 {
-    font-size: 18px;
-    color: #121212;
-    margin-bottom: 20px;
-  }
-  #apiWallet .form-payment .form_list span {
-    font-size: 14px;
-  }
-  #apiWallet .form-payment .form_list .check_code {
-    min-height: inherit;
-  }
-  #apiWallet .form-payment .form_list .check_code input {
-    font-size: 12px;
+  body.walletLogin #apiWallet .container .tab_container .logo {
+    display: none;
   }
 }
-#apiWallet .form-payment span {
-  font-size: 18px;
-}
-#apiWallet .form-payment span.wrong_msg {
-  font-size: 14px;
-  font-weight: normal;
-}
-@media screen and (max-device-width: 932px) and (orientation: landscape) {
-  #apiWallet .form-payment span {
-    -webkit-text-size-adjust: none;
-    text-size-adjust: none;
-    font-size: 14px;
-  }
-}
-#apiWallet .form-payment .code_PW {
+body.walletLogin #apiWallet .container aside {
   position: relative;
+  width: 300px;
+  height: 100vh;
 }
-#apiWallet .form-payment .code_PW input {
-  padding-right: 30px;
+body.walletLogin #apiWallet .container aside .logo {
+  display: none;
 }
-#apiWallet .form-payment .code_PW img {
-  position: absolute;
-  right: 10px;
-  top: 60%;
-  width: 30px;
-  height: 30px;
-  transform: translateY(-50%);
-  cursor: pointer;
+body.walletLogin #apiWallet .container aside .tabs {
+  position: fixed;
+  width: 250px;
+  margin-left: 49px;
+  margin-top: 35vh;
+}
+body.walletLogin #apiWallet .container aside .tabs div.tab .bg_im {
+  display: none;
+}
+body.walletLogin #apiWallet .container aside .tabs div.tab.active .bg_im {
   display: block;
+  position: absolute;
+  top: 0;
+  left: -78%;
+  margin-top: -82%;
+  width: 168%;
+  height: auto;
+}
+body.walletLogin #apiWallet .container aside .tabs div.tab.active .bg_im img {
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 1199.98px) {
+  body.walletLogin #apiWallet .container aside {
+    width: 35%;
+  }
+  body.walletLogin #apiWallet .container aside .tabs {
+    width: 15%;
+    margin-left: 16.8%;
+  }
+  body.walletLogin #apiWallet .container aside .tabs div.tab.active .bg_im {
+    left: -82%;
+    margin-top: -78%;
+    width: 180%;
+  }
 }
 @media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
-  #apiWallet .form-payment .code_PW img {
-    width: 20px;
-    height: 20px;
+  body.walletLogin #apiWallet .container aside {
+    width: 100%;
+    height: inherit;
+  }
+  body.walletLogin #apiWallet .container aside .tabs {
+    display: none;
+  }
+  body.walletLogin #apiWallet .container aside .tabs div.tab.active .bg_im {
+    display: none;
+  }
+  body.walletLogin #apiWallet .container aside .logo {
+    width: 100%;
+    display: block;
+    margin: 20px 0;
   }
 }
-#apiWallet .form-payment .form_bt {
+body.walletLogin #apiWallet .container .form-payment .form_list h4 {
+  text-align: center;
+  display: none;
+}
+body.walletLogin #apiWallet .container .form-payment .form_list > p {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 300;
+  color: #A5A5A5;
+  margin-bottom: 10%;
+  line-height: 1.4;
+}
+body.walletLogin #apiWallet .container .form-payment .form_list.reg .send_code {
   display: flex;
-  justify-content: flex-end;
+  flex-grow: 1;
+}
+body.walletLogin #apiWallet .container .form-payment .form_list.reg .send_code input {
+  border-radius: 10px 0 0 10px;
+}
+body.walletLogin #apiWallet .container .form-payment .form_list.reg .send_code a {
+  width: fit-content;
+  background-color: #A5A5A5;
+  color: #fff;
+  margin-top: 14px;
+  border-radius: 0 10px 10px 0;
+  text-decoration: none;
+  display: block;
+  padding: 1.5em 2em;
+  text-wrap: nowrap;
+}
+body.walletLogin #apiWallet .container .form-payment .form_list.reg .send_code.countdown a {
+  display: flex;
   align-items: center;
-  text-align: right;
-  font-size: 18px;
+  color: #A5A5A5;
+  background-color: #D6D6D6;
+  border-left: 1px solid #A5A5A5;
+  vertical-align: middle;
 }
-@media screen and (max-width: 767px) {
-  #apiWallet .form-payment .form_bt {
-    height: 50%;
-    justify-self: end;
-    align-items: flex-end;
-  }
+body.walletLogin #apiWallet .container .form-payment .form_list.reg .send_code.countdown a img {
+  margin-right: 0.5em;
 }
-#apiWallet .form-payment .form_bt p {
+body.walletLogin #apiWallet .container .form-payment .form_bt {
+  justify-content: space-between;
+  align-items: baseline;
+  text-align: left;
+}
+body.walletLogin #apiWallet .container .form-payment .form_bt p {
+  color: #8FB0DC;
+}
+body.walletLogin #apiWallet .container .form-payment .form_bt p.formbt_link {
+  display: none;
+}
+body.walletLogin #apiWallet .container .form-payment .form_bt .terms {
+  margin-bottom: 1em;
+}
+body.walletLogin #apiWallet .container .form-payment .form_bt .terms > input {
+  width: auto;
+}
+body.walletLogin #apiWallet .container .form-payment .form_bt .terms a {
   color: #A5A5A5;
 }
-#apiWallet .form-payment .form_bt p .tab_bt {
-  color: var(--primary);
-  cursor: pointer;
+body.walletLogin #apiWallet .container .form-payment .form_bt .terms.custom-checkbox label {
+  font-size: 18px;
 }
-#apiWallet .form-payment .form_bt .btn_blue {
-  width: 170px;
+body.walletLogin #apiWallet .container .form-payment .form_bt .terms.custom-checkbox label::before {
+  margin-top: 3px;
+}
+body.walletLogin #apiWallet .container .form-payment .form_bt .terms.custom-checkbox label::after {
+  margin-top: 3px;
+}
+@media (max-width: 1199.98px) {
+  body.walletLogin #apiWallet .container .form-payment .form_bt .terms.custom-checkbox label {
+    font-size: 16px;
+  }
+  body.walletLogin #apiWallet .container .form-payment .form_bt .terms.custom-checkbox label::before {
+    top: 2px;
+  }
 }
 @media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
-  #apiWallet .form-payment .form_bt {
-    font-size: 14px;
+  body.walletLogin #apiWallet .container .form-payment .form_list {
+    margin-top: 0;
   }
-  #apiWallet .form-payment .form_bt p {
-    order: 2;
-    margin-top: 1.3em;
+  body.walletLogin #apiWallet .container .form-payment .form_list h4 {
+    display: block;
+    font-size: 24px;
+    margin: 25px 0;
   }
-  #apiWallet .form-payment .form_bt .btn_blue {
-    width: 25vw;
-    order: 1;
+  body.walletLogin #apiWallet .container .form-payment .form_list p {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+  body.walletLogin #apiWallet .container .form-payment .form_list p.formbt_link {
+    display: block;
+    margin-bottom: 2em;
+  }
+  body.walletLogin #apiWallet .container .form-payment .form_list span {
+    letter-spacing: 0;
+  }
+  body.walletLogin #apiWallet .container .form-payment .form_list.reg .send_code a {
+    font-size: 12px;
+  }
+  body.walletLogin #apiWallet .container .form-payment .form_bt {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: auto;
+  }
+  body.walletLogin #apiWallet .container .form-payment .form_bt .terms {
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+  body.walletLogin #apiWallet .container .form-payment .form_bt .terms.custom-checkbox label {
+    font-size: 12px;
+  }
+  body.walletLogin #apiWallet .container .form-payment .form_bt .terms.custom-checkbox label::before, body.walletLogin #apiWallet .container .form-payment .form_bt .terms.custom-checkbox label::after {
+    margin-top: 0;
+  }
+  body.walletLogin #apiWallet .container .form-payment .form_bt .terms.custom-checkbox label::before {
+    width: 13px;
+    height: 13px;
+  }
+  body.walletLogin #apiWallet .container .form-payment .form_bt .terms.custom-checkbox label::after {
+    top: 3px;
+    left: 5px;
   }
 }
-@media screen and (max-device-width: 932px) and (orientation: landscape) {
-  #apiWallet .form-payment .form_bt {
-    margin-top: 3vw;
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  body.walletLogin #apiWallet .container {
+    align-items: center;
+    height: fit-content;
   }
-  #apiWallet .form-payment .form_bt p {
-    font-size: 14px;
+}
+@media screen and (max-width: 767px), screen and (max-device-width: 932px) and (orientation: landscape) {
+  body.walletLogin {
+    display: block;
+    min-height: 100dvh;
   }
-  #apiWallet .form-payment .form_bt .btn_blue {
-    width: 15em;
-    font-size: 14px;
+  body.walletLogin #apiWallet .container aside .tabs.tab_nnn {
+    display: none;
   }
 }/*# sourceMappingURL=wallet.css.map */
