@@ -275,6 +275,7 @@ input[type=radio] {
     margin-right: .5em;
   }
   .langListItem{
+    display: none;
     position: absolute;
     top: 25px;
     left: 0;
@@ -298,11 +299,14 @@ input[type=radio] {
       }
     }
   }
-  &:hover,&.open{
-    .langListItem{
-      height: auto;
-      transform: scaleY(1); /* 展開 */
-      opacity: 1; /* 顯示 */
+  @include breakpoint('md','min'){
+    &:hover{
+      .langListItem{
+        // display: block;
+        height: auto;
+        transform: scaleY(1); /* 展開 */
+        opacity: 1; /* 顯示 */
+      }
     }
   }
 }

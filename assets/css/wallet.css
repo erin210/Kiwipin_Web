@@ -307,6 +307,7 @@ input[type=radio]:checked::after {
   margin-right: 0.5em;
 }
 .languageBox .langListItem {
+  display: none;
   position: absolute;
   top: 25px;
   left: 0;
@@ -329,10 +330,12 @@ input[type=radio]:checked::after {
 .languageBox .langListItem li:hover {
   background-color: var(--primary);
 }
-.languageBox:hover .langListItem, .languageBox.open .langListItem {
-  height: auto;
-  transform: scaleY(1); /* 展開 */
-  opacity: 1; /* 顯示 */
+@media (min-width: 991.98px) {
+  .languageBox:hover .langListItem {
+    height: auto;
+    transform: scaleY(1); /* 展開 */
+    opacity: 1; /* 顯示 */
+  }
 }
 
 #apiWallet {
