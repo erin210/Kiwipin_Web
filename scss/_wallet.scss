@@ -269,7 +269,6 @@ input[type=radio] {
   // padding-bottom: 10px;
   color: $text_grey2;
   // font-size: 18px;
-  // border: 1px solid #f00;
   cursor: pointer;
   img{
     height: 1em;
@@ -288,9 +287,9 @@ input[type=radio] {
     color: $white;
     border-radius: 10px;
     transform: scaleY(0); /* 初始隱藏 */
-        transform-origin: top; /* 從上方展開 */
-        opacity: 0; /* 初始透明 */
-        transition: transform 0.3s ease, opacity 0.5s ease;
+    transform-origin: top; /* 從上方展開 */
+    opacity: 0; /* 初始透明 */
+    transition: transform 0.3s ease, opacity 0.5s ease;
     li{
       // line-height: 2;
       padding: .5em 15px;
@@ -299,7 +298,7 @@ input[type=radio] {
       }
     }
   }
-  &:hover{
+  &:hover,&.open{
     .langListItem{
       height: auto;
       transform: scaleY(1); /* 展開 */
@@ -705,7 +704,6 @@ input[type=radio] {
         height: 86%;
         padding: 0 1%;
         overflow-y: auto;
-        // border: 1px solid #f00;
         
       }
       @include breakpoint('xl', 'max'){
@@ -767,7 +765,6 @@ input[type=radio] {
           color: $text_grey2;
           font-size: 18px;
           display: block;
-          border:#f00;
         } 
         span#userID{
           margin-top: -.3em;
@@ -782,7 +779,7 @@ input[type=radio] {
             // height: auto;
             // height: 1.5em;
             // line-height: 2;
-            filter: brightness(9.5);
+            filter: brightness(9);
             img{
               width: 100%;
               height: auto;
@@ -1246,7 +1243,6 @@ input[type=radio] {
               }
                 th:first-child{
                   border-radius: 10px 0 0 10px;
-                  // border: 1px solid #f00;
                   padding-left: .8em;
                 }
                 td.list_th{
@@ -1262,7 +1258,7 @@ input[type=radio] {
               th{
                 background-color: $light_grey4;
                 font-size: 16px;
-                // border: 1px solid #f00;
+                letter-spacing: 0;
               }
               td{
                 font-size: 14px;
@@ -1273,6 +1269,9 @@ input[type=radio] {
                 }
                 &.acc_product{
                   width: 18%;
+                }
+                &.acc_order, &.acc_date{
+                  letter-spacing: 0;
                 }
                 span{
                   font-size: 14px;
@@ -1308,6 +1307,7 @@ input[type=radio] {
             }
           }
           .list_M{
+            letter-spacing: 0;
             h5{
               font-size: 14px;
               color:$text_grey2;

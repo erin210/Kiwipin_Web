@@ -31,9 +31,13 @@
 @keyframes fadeShadow {
   from {
     box-shadow: 0 0 0 rgba(18, 18, 18, 0);
+    opacity: 0.3;
+    filter: brightness(1);
   }
   to {
     box-shadow: 0 0 10px rgba(18, 18, 18, 0.25);
+    opacity: 1;
+    filter: brightness(1.2);
   }
 }
 /* 定義淡出陰影 */
@@ -325,7 +329,7 @@ input[type=radio]:checked::after {
 .languageBox .langListItem li:hover {
   background-color: var(--primary);
 }
-.languageBox:hover .langListItem {
+.languageBox:hover .langListItem, .languageBox.open .langListItem {
   height: auto;
   transform: scaleY(1); /* 展開 */
   opacity: 1; /* 顯示 */
@@ -787,7 +791,6 @@ input[type=radio]:checked::after {
   color: #A5A5A5;
   font-size: 18px;
   display: block;
-  border: #f00;
 }
 #apiWallet .container .tab_container .loginBar span#userID {
   margin-top: -0.3em;
@@ -799,7 +802,7 @@ input[type=radio]:checked::after {
 }
 #apiWallet .container .tab_container .loginBar .imgbox.arrow {
   width: 1em;
-  filter: brightness(9.5);
+  filter: brightness(9);
 }
 #apiWallet .container .tab_container .loginBar .imgbox.arrow img {
   width: 100%;
@@ -1215,6 +1218,7 @@ input[type=radio]:checked::after {
 #apiWallet .container .tab_container .form-payment .history_list .list_PC table th {
   background-color: #EFEFEF;
   font-size: 16px;
+  letter-spacing: 0;
 }
 #apiWallet .container .tab_container .form-payment .history_list .list_PC table td {
   font-size: 14px;
@@ -1226,6 +1230,9 @@ input[type=radio]:checked::after {
 }
 #apiWallet .container .tab_container .form-payment .history_list .list_PC table td.acc_product {
   width: 18%;
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_PC table td.acc_order, #apiWallet .container .tab_container .form-payment .history_list .list_PC table td.acc_date {
+  letter-spacing: 0;
 }
 #apiWallet .container .tab_container .form-payment .history_list .list_PC table td span {
   font-size: 14px;
@@ -1255,6 +1262,9 @@ input[type=radio]:checked::after {
   #apiWallet .container .tab_container .form-payment .history_list .list_PC {
     display: none;
   }
+}
+#apiWallet .container .tab_container .form-payment .history_list .list_M {
+  letter-spacing: 0;
 }
 #apiWallet .container .tab_container .form-payment .history_list .list_M h5 {
   font-size: 14px;
@@ -1806,6 +1816,7 @@ body.walletLogin #apiWallet .container aside {
   position: relative;
   width: 300px;
   height: 100vh;
+  overflow: hidden;
 }
 body.walletLogin #apiWallet .container aside .logo {
   display: none;
@@ -1831,6 +1842,11 @@ body.walletLogin #apiWallet .container aside .tabs div.tab.active .bg_im {
 body.walletLogin #apiWallet .container aside .tabs div.tab.active .bg_im img {
   width: 100%;
   height: auto;
+}
+@media screen and (min-width: 1200px) {
+  body.walletLogin #apiWallet .container aside .tabs {
+    margin-left: 3.05rem;
+  }
 }
 @media (max-width: 1199.98px) {
   body.walletLogin #apiWallet .container aside {
