@@ -299,16 +299,18 @@ input[type=radio]:checked::after {
   display: flex;
   align-items: center;
   width: 6em;
+  height: 2em;
   color: #A5A5A5;
   cursor: pointer;
 }
 .languageBox img {
   height: 1em;
+  margin-top: 0.2em;
   margin-right: 0.5em;
 }
 .languageBox .langListItem {
   position: absolute;
-  top: 25px;
+  top: 30px;
   left: 0;
   margin-top: 0;
   min-width: 8em;

@@ -266,17 +266,19 @@ input[type=radio] {
   display: flex;
   align-items: center;
   width: 6em;
+  height: 2em;
   // padding-bottom: 10px;
   color: $text_grey2;
   // font-size: 18px;
   cursor: pointer;
   img{
     height: 1em;
+    margin-top: .2em;
     margin-right: .5em;
   }
   .langListItem{
     position: absolute;
-    top: 25px;
+    top: 30px;
     left: 0;
     margin-top: 0;
     min-width: 8em;
