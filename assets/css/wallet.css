@@ -329,7 +329,7 @@ input[type=radio]:checked::after {
 .languageBox .langListItem li:hover {
   background-color: var(--primary);
 }
-.languageBox:hover .langListItem, .languageBox.open .langListItem {
+.languageBox:hover .langListItem {
   height: auto;
   transform: scaleY(1); /* 展開 */
   opacity: 1; /* 顯示 */

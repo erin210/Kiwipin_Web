@@ -298,7 +298,7 @@ input[type=radio] {
       }
     }
   }
-  &:hover,&.open{
+  &:hover{
     .langListItem{
       height: auto;
       transform: scaleY(1); /* 展開 */
